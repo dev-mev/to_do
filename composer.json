@@ -1,3 +1,5 @@
 {
-  "require": {}
+  "require": {
+    "vlucas/phpdotenv": "^3.6"
+  }
 }

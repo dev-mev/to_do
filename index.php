@@ -1,14 +1,19 @@
 <?php
+require __DIR__ . '/vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::create(__DIR__);
+$dotenv->load();
+
 require_once 'app/init.php';
 
-$itemsQuery = $db->prepare("
+$itemsQuery = $conn->prepare("
   SELECT id, name, done
   FROM items
-  WHERE user = :user
+  WHERE user = :todo_user
 ");
 
 $itemsQuery->execute([
-  'user' => $_SESSION['user_id']
+  'todo_user' => $_SESSION['user_id']
 ]);
 
 $items = $itemsQuery->rowCount() ? $itemsQuery : [];

@@ -7,7 +7,7 @@ if(isset($_GET['as'], $_GET['item'])) {
 
   switch($as) {
     case 'done':
-      $doneQuery = $db->prepare("
+      $doneQuery = $conn->prepare("
         UPDATE items
         SET done = 1
         WHERE id = :item
