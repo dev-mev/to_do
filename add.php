@@ -11,7 +11,7 @@ if(isset($_POST['name'])) {
     ");
 
     $addedQuery->execute([
-      'name' => $name,
+      'name' => htmlspecialchars($name),
       'user' => $_SESSION['user_id']
     ]);
   }
