@@ -1,19 +1,22 @@
 <?php
 require __DIR__ . '/vendor/autoload.php';
 
-$dotenv = Dotenv\Dotenv::create(__DIR__);
-$dotenv->load();
+// Work around for https://github.com/vlucas/phpdotenv/issues/345
+if (false === getenv('JAWSDB_URL')) {
+  $dotenv = Dotenv\Dotenv::create(__DIR__);
+  $dotenv->load();
+}
 
 require_once 'app/init.php';
 
 $itemsQuery = $conn->prepare("
   SELECT id, name, done
   FROM items
-  WHERE user = :todo_user
+  WHERE user = :user
 ");
 
 $itemsQuery->execute([
-  'todo_user' => $_SESSION['user_id']
+  'user' => $_SESSION['user_id']
 ]);
 
 $items = $itemsQuery->rowCount() ? $itemsQuery : [];
